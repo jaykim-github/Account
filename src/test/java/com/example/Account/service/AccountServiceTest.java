@@ -1,7 +1,7 @@
 package com.example.Account.service;
 
 import com.example.Account.domain.Account;
-import com.example.Account.domain.AccountStatus;
+import com.example.Account.type.AccountStatus;
 import com.example.Account.repository.AccountRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

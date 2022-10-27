@@ -1,12 +1,13 @@
 package com.example.Account.controller;
 
 import com.example.Account.domain.Account;
+import com.example.Account.dto.CreateAccount;
 import com.example.Account.service.AccountService;
 import com.example.Account.service.RedisTestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,16 +16,20 @@ public class AccountController {
     private final AccountService accountService; // 의존성 주입
     private final RedisTestService redisTestService;
 
+    @PostMapping("/account")
+    public CreateAccount.Response createAccount(
+            @RequestBody @Valid CreateAccount.Request request
+    ){
+        accountService.createAccount(request.getUserId(),
+                request.getInitialBalance());
+        return "success";
+    }
+
     @GetMapping("/get-lock")
     public String getLock(){
         return redisTestService.getLock();
     }
 
-    @GetMapping("/create-account")
-    public String creatAccount(){
-        accountService.createAccount();
-        return "success";
-    }
 
 
     @GetMapping("/account/{id}")
