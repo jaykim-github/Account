@@ -30,8 +30,4 @@ public class AccountUser {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @CreatedDate //자동 저장
-    private LocalDateTime createdAt;
-    @LastModifiedDate // 자동 저장
-    private LocalDateTime updatedAt;
 }
