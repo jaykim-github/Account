@@ -1,6 +1,7 @@
 package com.example.Account.controller;
 
 
+import com.example.Account.aop.AccountLock;
 import com.example.Account.dto.CancelBalance;
 import com.example.Account.dto.QueryTransactionResponse;
 import com.example.Account.dto.UseBalance;
@@ -27,6 +28,7 @@ public class TransactionController {
 
 
     @PostMapping("/transaction/use")
+    @AccountLock
     public UseBalance.Response useBalance(
             @Valid @RequestBody UseBalance.Request request
     ) {
@@ -46,6 +48,7 @@ public class TransactionController {
     }
 
     @PostMapping("/transaction/cancel")
+    @AccountLock
     public CancelBalance.Response cancelBalance(
             @Valid @RequestBody CancelBalance.Request request
     ) {

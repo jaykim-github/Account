@@ -19,10 +19,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class) // 자동 저장용 어노테이션
-public class Account {//설정 클래스
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Account extends BaseEntity{//설정 클래스
 
     @ManyToOne
     private AccountUser accountUser;
@@ -34,12 +31,6 @@ public class Account {//설정 클래스
 
     private LocalDateTime registeredAt;
     private LocalDateTime unRegisteredAt;
-
-    @CreatedDate //자동 저장
-    private LocalDateTime createdAt;
-    @LastModifiedDate // 자동 저장
-    private LocalDateTime updatedAt;
-
 
     //중요한 데이터를 변경하는 로직은 객체 안에서 수행할 수 있도록 하기...
     public void useBalance(Long amount) {

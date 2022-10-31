@@ -35,8 +35,7 @@ public class AccountService {
     @Transactional
     public AccountDto createAccount(Long userId, Long initialBalnce) {
         //DB 저장을 위해선 account 엔티티 생성 필요
-        AccountUser accountUser = accountUserRepository.findById(userId)
-                .orElseThrow(() -> new AccountException(USER_NOT_FOUND));//사용자가 없음 exception
+        AccountUser accountUser = getAccountUser(userId);
 
         //validation은 아무리 짧아도 따로 빼야함
         validateCreateAccount(accountUser);
@@ -57,6 +56,13 @@ public class AccountService {
                 ));
     }
 
+
+    private AccountUser getAccountUser(Long userId) {
+        AccountUser accountUser = accountUserRepository.findById(userId)
+                .orElseThrow(() -> new AccountException(USER_NOT_FOUND));//사용자가 없음 exception
+        return accountUser;
+    }
+
     private void validateCreateAccount(AccountUser accountUser) {
         if (accountRepository.countByAccountUser(accountUser) >= 10) {
             throw new AccountException(ErrorCode.MAX_ACCOUNT_PER_USER_10);
@@ -71,8 +77,8 @@ public class AccountService {
     @Transactional
     public AccountDto deleteAccount(Long userId, String accountNumber) {
         //유저가 없는 경우
-        AccountUser accountUser = accountUserRepository.findById(userId)
-                .orElseThrow(() -> new AccountException(USER_NOT_FOUND));
+        AccountUser accountUser = getAccountUser(userId);
+
         Account account = accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() -> new AccountException(ErrorCode.ACCOUNT_NOT_FOUND));
 
@@ -103,11 +109,8 @@ public class AccountService {
 
     @Transactional
     public List<AccountDto> getAccountsByUserId(Long userId) {
-        AccountUser accountUser = accountUserRepository.findById(userId)
-                .orElseThrow(() -> new AccountException(USER_NOT_FOUND));
-
+        AccountUser accountUser = getAccountUser(userId);
         List<Account> accounts = accountRepository.findByAccountUser(accountUser);
-
 
         //accounts 리스트를 AccountDto 형식으로 변형했다가 다시 리스트로 받음
         return accounts.stream()

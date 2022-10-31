@@ -7,7 +7,7 @@ import com.example.Account.dto.DeleteAccount;
 import com.example.Account.exception.AccountException;
 import com.example.Account.type.AccountStatus;
 import com.example.Account.service.AccountService;
-import com.example.Account.service.RedisTestService;
+
 import com.example.Account.type.ErrorCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,9 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AccountControllerTest {
     @MockBean
     private AccountService accountService;
-
-    @MockBean
-    private RedisTestService redisTestService;
 
     @Autowired
     private MockMvc mockMvc;
